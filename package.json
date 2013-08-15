@@ -1,0 +1,20 @@
+{
+  "name": "whippet",
+  "version": "0.0.0",
+  "description": "convert wkt to geojson",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "keywords": [
+    "wkt",
+    "geojson",
+    "maps"
+  ],
+  "author": "Tom MacWright",
+  "license": "BSD",
+  "devDependencies": {
+    "expect.js": "~0.2.0",
+    "mocha": "~1.12.0"
+  }
+}
