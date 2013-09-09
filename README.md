@@ -4,6 +4,19 @@
 
 Parse [Well-Known Text](http://en.wikipedia.org/wiki/Well-known_text) into [GeoJSON](http://www.geojson.org/).
 
+## usage
+
+this is a node-style module that works in node.js via npm and in browsers via
+[browserify](https://github.com/substack/node-browserify) or a standalone package:
+
+**npm install**:
+
+    npm install wellknown
+
+**standalone**:
+
+    wget https://raw.github.com/mapbox/wellknown/master/wellknown.js
+
 ## api
 
 ### `parse(wkt)`
