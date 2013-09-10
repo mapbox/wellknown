@@ -1,6 +1,11 @@
 module.exports = parse;
 
-// https://gist.github.com/ammojamo/1048372
+/*
+ * Parse WKT and return GeoJSON.
+ *
+ * @param {string} _ A WKT geometry
+ * @return {?Object} A GeoJSON geometry object
+ */
 function parse(_) {
 
     var i = 0;
@@ -58,7 +63,7 @@ function parse(_) {
     }
 
     function point() {
-        if (!$(/^(POINT)/)) return null;
+        if (!$(/^(point)/i)) return null;
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
@@ -71,7 +76,7 @@ function parse(_) {
     }
 
     function multipoint() {
-        if (!$(/^(MULTIPOINT)/)) return null;
+        if (!$(/^(multipoint)/i)) return null;
         white();
         var c = multicoords();
         white();
@@ -82,7 +87,7 @@ function parse(_) {
     }
 
     function multilinestring() {
-        if (!$(/^(MULTILINESTRING)/)) return null;
+        if (!$(/^(multilinestring)/i)) return null;
         white();
         var c = multicoords();
         white();
@@ -93,7 +98,7 @@ function parse(_) {
     }
 
     function linestring() {
-        if (!$(/^(LINESTRING)/)) return null;
+        if (!$(/^(linestring)/i)) return null;
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
@@ -105,7 +110,7 @@ function parse(_) {
     }
 
     function polygon() {
-        if (!$(/^(POLYGON)/)) return null;
+        if (!$(/^(polygon)/i)) return null;
         white();
         return {
             type: 'Polygon',
@@ -114,7 +119,7 @@ function parse(_) {
     }
 
     function multipolygon() {
-        if (!$(/^(MULTIPOLYGON)/)) return null;
+        if (!$(/^(multipolygon)/i)) return null;
         white();
         return {
             type: 'MultiPolygon',
@@ -125,13 +130,15 @@ function parse(_) {
     function geometrycollection() {
         var geometries = [], geometry;
 
-        if (!$(/^(GEOMETRYCOLLECTION)/)) return null;
+        if (!$(/^(geometrycollection)/i)) return null;
         white();
 
         if (!$(/^(\()/)) return null;
         while (geometry = root()) {
             geometries.push(geometry);
+            white();
             $(/^(\,)/);
+            white();
         }
         if (!$(/^(\))/)) return null;
 

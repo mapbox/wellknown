@@ -8,15 +8,51 @@ describe('wellknown', function() {
                 type: 'Point',
                 coordinates: [1, 1]
             });
+            expect(parse('POINT(1 1)')).to.eql({
+                type: 'Point',
+                coordinates: [1, 1]
+            });
+            expect(parse('POINT\n\r(1 1)')).to.eql({
+                type: 'Point',
+                coordinates: [1, 1]
+            });
+            expect(parse('POINT(1.1 1.1)')).to.eql({
+                type: 'Point',
+                coordinates: [1.1, 1.1]
+            });
+            expect(parse('point(1.1 1.1)')).to.eql({
+                type: 'Point',
+                coordinates: [1.1, 1.1]
+            });
+            expect(parse('point(1 2 3)')).to.eql({
+                type: 'Point',
+                coordinates: [1, 2, 3]
+            });
         });
         it('linestring', function() {
             expect(parse('LINESTRING (30 10, 10 30, 40 40)')).to.eql({
                 type: 'LineString',
                 coordinates: [[30, 10], [10, 30], [40, 40]]
             });
+            expect(parse('LINESTRING(30 10, 10 30, 40 40)')).to.eql({
+                type: 'LineString',
+                coordinates: [[30, 10], [10, 30], [40, 40]]
+            });
+            expect(parse('LineString(30 10, 10 30, 40 40)')).to.eql({
+                type: 'LineString',
+                coordinates: [[30, 10], [10, 30], [40, 40]]
+            });
+            expect(parse('LINESTRING (1 2 3, 4 5 6)')).to.eql({
+                type: 'LineString',
+                coordinates: [[1, 2, 3], [4, 5, 6]]
+            });
         });
         it('polygon', function() {
             expect(parse('POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')).to.eql({
+                type: 'Polygon',
+                coordinates: [[[30, 10], [10, 20], [20, 40], [40, 40], [30, 10]]]
+            });
+            expect(parse('POLYGON((30 10, 10 20, 20 40, 40 40, 30 10))')).to.eql({
                 type: 'Polygon',
                 coordinates: [[[30, 10], [10, 20], [20, 40], [40, 40], [30, 10]]]
             });
@@ -48,6 +84,10 @@ describe('wellknown', function() {
                 type: 'MultiPoint',
                 coordinates: [[1, 1], [2, 3]]
             });
+            expect(parse('MultiPoint (1 1, 2 3)')).to.eql({
+                type: 'MultiPoint',
+                coordinates: [[1, 1], [2, 3]]
+            });
         });
         it('multilinestring', function() {
             expect(parse('MULTILINESTRING ((30 10, 10 30, 40 40), (30 10, 10 30, 40 40))')).to.eql({
@@ -63,14 +103,26 @@ describe('wellknown', function() {
                 coordinates: [
                     [[30, 20], [10, 40], [45, 40], [30, 20]],
                     [[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]
-
             });
         });
     });
 
     describe('collection', function() {
         it('geometrycollection', function() {
-            expect(parse('GEOMETRYCOLLECTION(POINT(4 6),LINESTRING(4 6,7 10))')).to.eql({
+            expect(parse('GeometryCollection(POINT(4 6),LINESTRING(4 6,7 10))')).to.eql({
+                type: 'GeometryCollection',
+                geometries: [
+                    {
+                        type: 'Point',
+                        coordinates: [4, 6]
+                    },
+                    {
+                        type: 'LineString',
+                        coordinates: [[4, 6], [7, 10]]
+                    }
+                ]
+            });
+            expect(parse('GeometryCollection(POINT(4 6),\nLINESTRING(4 6,7 10))')).to.eql({
                 type: 'GeometryCollection',
                 geometries: [
                     {

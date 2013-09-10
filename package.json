@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha -R spec"
   },
+  "bin": {
+    "wellknown": "cli.js"
+  },
   "keywords": [
     "wkt",
     "geojson",
@@ -16,5 +19,9 @@
   "devDependencies": {
     "expect.js": "~0.2.0",
     "mocha": "~1.12.0"
+  },
+  "dependencies": {
+    "concat-stream": "~1.0.1",
+    "minimist": "0.0.2"
   }
 }
