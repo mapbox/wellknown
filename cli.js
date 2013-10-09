@@ -3,9 +3,10 @@
 var concat = require('concat-stream'),
     wellknown = require('./'),
     fs = require('fs'),
+    sharkdown = require('sharkdown'),
     argv = require('minimist')(process.argv.slice(2));
 
-if (argv.help || argv.h) return help();
+if (argv.help || argv.h || (!argv._.length && process.stdin.isTTY)) return help();
 
 ((argv._[0] && fs.createReadStream(argv._[0])) || process.stdin).pipe(concat(openData));
 
@@ -18,4 +19,6 @@ function openData(body) {
     }
 }
 
-function help() { fs.createReadStream('README.md').pipe(process.stdout); }
+function help() {
+    process.stdout.write(sharkdown(fs.readFileSync(__dirname + '/README.md')));
+}
