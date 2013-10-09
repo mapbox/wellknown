@@ -1,6 +1,6 @@
 {
   "name": "wellknown",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "convert wkt to geojson",
   "main": "index.js",
   "scripts": {
