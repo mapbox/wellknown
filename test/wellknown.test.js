@@ -1,4 +1,5 @@
 var parse = require('../'),
+    fs = require('fs'),
     expect = require('expect.js');
 
 describe('wellknown', function() {
@@ -107,7 +108,18 @@ describe('wellknown', function() {
         });
     });
 
+    function file(_) {
+        return fs.readFileSync('test/data/' + _, 'utf8');
+    }
+
+    function fileJSON(_) {
+        return JSON.parse(fs.readFileSync('test/data/' + _, 'utf8'));
+    }
+
     describe('collection', function() {
+        it('advanced', function() {
+            expect(parse(file('geometrycollection.wkt'))).to.eql(fileJSON('geometrycollection.geojson'));
+        });
         it('geometrycollection', function() {
             expect(parse('GeometryCollection(POINT(4 6),LINESTRING(4 6,7 10))')).to.eql({
                 type: 'GeometryCollection',

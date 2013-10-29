@@ -34,6 +34,7 @@ function parse(_) {
                 depth++;
             } else if (elem == ')') {
                 depth--;
+                if (depth == 0) break;
             } else if (elem && Array.isArray(elem) && elem.length) {
                 pointer.push(elem);
             } else if (elem === ',') {
@@ -149,8 +150,13 @@ function parse(_) {
     }
 
     function root() {
-        return point() || linestring() || polygon() ||
-            multipoint() || multilinestring() || multipolygon() || geometrycollection();
+        return point() ||
+            linestring() ||
+            polygon() ||
+            multipoint() ||
+            multilinestring() ||
+            multipolygon() ||
+            geometrycollection();
     }
 
     return root();
