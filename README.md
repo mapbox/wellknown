@@ -53,6 +53,7 @@ parse('POINT(1 2)');
 ## See Also
 
 * [wicket](https://github.com/arthur-e/Wicket)
+* [openlayers wkt](https://github.com/openlayers/openlayers/blob/master/lib/OpenLayers/Format/WKT.js)
 
 ## Rant
 
