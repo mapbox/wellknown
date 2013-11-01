@@ -29,6 +29,16 @@ describe('wellknown', function() {
                 type: 'Point',
                 coordinates: [1, 2, 3]
             });
+            expect(parse('SRID=3857;POINT (1 2 3)')).to.eql({
+                type: 'Point',
+                coordinates: [1, 2, 3],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
+            });
         });
         it('linestring', function() {
             expect(parse('LINESTRING (30 10, 10 30, 40 40)')).to.eql({
@@ -47,6 +57,16 @@ describe('wellknown', function() {
                 type: 'LineString',
                 coordinates: [[1, 2, 3], [4, 5, 6]]
             });
+            expect(parse('SRID=3857;LINESTRING (30 10, 10 30, 40 40)')).to.eql({
+                type: 'LineString',
+                coordinates: [[30, 10], [10, 30], [40, 40]],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
+            });
         });
         it('polygon', function() {
             expect(parse('POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')).to.eql({
@@ -56,6 +76,16 @@ describe('wellknown', function() {
             expect(parse('POLYGON((30 10, 10 20, 20 40, 40 40, 30 10))')).to.eql({
                 type: 'Polygon',
                 coordinates: [[[30, 10], [10, 20], [20, 40], [40, 40], [30, 10]]]
+            });
+            expect(parse('SRID=3857;POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')).to.eql({
+                type: 'Polygon',
+                coordinates: [[[30, 10], [10, 20], [20, 40], [40, 40], [30, 10]]],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
             });
         });
         it('polygon / rings', function() {
@@ -89,6 +119,16 @@ describe('wellknown', function() {
                 type: 'MultiPoint',
                 coordinates: [[1, 1], [2, 3]]
             });
+            expect(parse('SRID=3857;MULTIPOINT (1 1, 2 3)')).to.eql({
+                type: 'MultiPoint',
+                coordinates: [[1, 1], [2, 3]],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
+            });
         });
         it('multilinestring', function() {
             expect(parse('MULTILINESTRING ((30 10, 10 30, 40 40), (30 10, 10 30, 40 40))')).to.eql({
@@ -97,6 +137,18 @@ describe('wellknown', function() {
                     [[30, 10], [10, 30], [40, 40]],
                     [[30, 10], [10, 30], [40, 40]]]
             });
+            expect(parse('SRID=3857;MULTILINESTRING ((30 10, 10 30, 40 40), (30 10, 10 30, 40 40))')).to.eql({
+                type: 'MultiLineString',
+                coordinates: [
+                    [[30, 10], [10, 30], [40, 40]],
+                    [[30, 10], [10, 30], [40, 40]]],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
+            });
         });
         it('multipolygon', function() {
             expect(parse('MULTIPOLYGON (((30 20, 10 40, 45 40, 30 20)), ((15 5, 40 10, 10 20, 5 10, 15 5)))')).to.eql({
@@ -104,6 +156,18 @@ describe('wellknown', function() {
                 coordinates: [
                     [[30, 20], [10, 40], [45, 40], [30, 20]],
                     [[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]
+            });
+            expect(parse('SRID=3857;MULTIPOLYGON (((30 20, 10 40, 45 40, 30 20)), ((15 5, 40 10, 10 20, 5 10, 15 5)))')).to.eql({
+                type: 'MultiPolygon',
+                coordinates: [
+                    [[30, 20], [10, 40], [45, 40], [30, 20]],
+                    [[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]],
+                crs: {
+                    type: 'name',
+                    'properties': {
+                        name: 'urn:ogc:def:crs:EPSG::3857'
+                    }
+                }
             });
         });
     });
