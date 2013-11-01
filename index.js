@@ -7,6 +7,9 @@ module.exports = parse;
  * @return {?Object} A GeoJSON geometry object
  */
 function parse(_) {
+    var parts = _.split(";"),
+        _ = parts.pop(),
+        srid = (parts.shift() || "").split("=").pop();
 
     var i = 0;
 
@@ -17,6 +20,19 @@ function parse(_) {
             i += match[0].length;
             return match[0];
         }
+    }
+
+    function crs(obj) {
+        if (obj && srid.match(/\d+/)) {
+            obj.crs = {
+                type: 'name',
+                'properties': {
+                    name: 'urn:ogc:def:crs:EPSG::' + srid
+                }
+            };
+        }
+
+        return obj;
     }
 
     function white() { $(/^\s*/); }
@@ -159,5 +175,5 @@ function parse(_) {
             geometrycollection();
     }
 
-    return root();
+    return crs(root());
 }
