@@ -50,6 +50,13 @@ var parse = require('wellknown');
 parse('POINT(1 2)');
 ```
 
+#### Integrating with Leaflet
+
+```js
+// With Leaflet or MapBox.js
+var geojsonLayer = L.geoJson(parse('Point(1 2)'));
+```
+
 ## See Also
 
 * [wicket](https://github.com/arthur-e/Wicket)
