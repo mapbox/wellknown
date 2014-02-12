@@ -47,23 +47,23 @@ function parse(_) {
             $(/^(\,)/) ||
             $(/^[-+]?([0-9]*\.[0-9]+|[0-9]+)/)) {
             if (elem == '(') {
-				stack.push(pointer);
-				pointer = [];
-				stack[stack.length-1].push(pointer);
+                stack.push(pointer);
+                pointer = [];
+                stack[stack.length-1].push(pointer);
                 depth++;
             } else if (elem == ')') {
                 pointer = stack.pop();
                 depth--;
                 if (depth == 0) break;
             } else if (elem === ',') {
-				pointer = [];
-				stack[stack.length-1].push(pointer);
+                pointer = [];
+                stack[stack.length-1].push(pointer);
             } else {
                 pointer.push(parseFloat(elem));
             }
             white();
         }
-		stack.length = 0;
+        stack.length = 0;
         if (depth !== 0) return null;
         return rings;
     }
