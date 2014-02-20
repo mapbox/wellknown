@@ -1,6 +1,6 @@
 module.exports = parse;
 
-/*
+ /*
  * Parse WKT and return GeoJSON.
  *
  * @param {string} _ A WKT geometry
@@ -39,24 +39,31 @@ function parse(_) {
 
     function multicoords() {
         white();
-        var depth = 0, rings = [],
+        var depth = 0, rings = [], stack = [rings],
             pointer = rings, elem;
         while (elem =
             $(/^(\()/) ||
             $(/^(\))/) ||
             $(/^(\,)/) ||
-            coords()) {
+            $(/^[-+]?([0-9]*\.[0-9]+|[0-9]+)/)) {
             if (elem == '(') {
+                stack.push(pointer);
+                pointer = [];
+                stack[stack.length-1].push(pointer);
                 depth++;
             } else if (elem == ')') {
+                pointer = stack.pop();
                 depth--;
                 if (depth == 0) break;
-            } else if (elem && Array.isArray(elem) && elem.length) {
-                pointer.push(elem);
             } else if (elem === ',') {
+                pointer = [];
+                stack[stack.length-1].push(pointer);
+            } else {
+                pointer.push(parseFloat(elem));
             }
             white();
         }
+        stack.length = 0;
         if (depth !== 0) return null;
         return rings;
     }
@@ -99,7 +106,7 @@ function parse(_) {
         white();
         return {
             type: 'MultiPoint',
-            coordinates: c[0]
+            coordinates: c
         };
     }
 
