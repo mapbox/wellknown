@@ -1,3 +1,4 @@
+.PHONY: wellknown.js index.js package.json
 all: wellknown.js
 
 wellknown.js: index.js package.json
