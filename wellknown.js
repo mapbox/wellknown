@@ -1,9 +1,16 @@
-(function(e){if("function"==typeof bootstrap)bootstrap("wellknown",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makeWellknown=e}else"undefined"!=typeof window?window.wellknown=e():global.wellknown=e()})(function(){var define,ses,bootstrap,module,exports;
-return (function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0].call(u.exports,function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var n;"undefined"!=typeof window?n=window:"undefined"!=typeof global?n=global:"undefined"!=typeof self&&(n=self),n.wellknown=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 module.exports = parse;
 
-// https://gist.github.com/ammojamo/1048372
+ /*
+ * Parse WKT and return GeoJSON.
+ *
+ * @param {string} _ A WKT geometry
+ * @return {?Object} A GeoJSON geometry object
+ */
 function parse(_) {
+    var parts = _.split(";"),
+        _ = parts.pop(),
+        srid = (parts.shift() || "").split("=").pop();
 
     var i = 0;
 
@@ -16,27 +23,48 @@ function parse(_) {
         }
     }
 
+    function crs(obj) {
+        if (obj && srid.match(/\d+/)) {
+            obj.crs = {
+                type: 'name',
+                'properties': {
+                    name: 'urn:ogc:def:crs:EPSG::' + srid
+                }
+            };
+        }
+
+        return obj;
+    }
+
     function white() { $(/^\s*/); }
 
     function multicoords() {
         white();
-        var depth = 0, rings = [],
+        var depth = 0, rings = [], stack = [rings],
             pointer = rings, elem;
         while (elem =
             $(/^(\()/) ||
             $(/^(\))/) ||
             $(/^(\,)/) ||
-            coords()) {
+            $(/^[-+]?([0-9]*\.[0-9]+|[0-9]+)/)) {
             if (elem == '(') {
+                stack.push(pointer);
+                pointer = [];
+                stack[stack.length-1].push(pointer);
                 depth++;
             } else if (elem == ')') {
+                pointer = stack.pop();
                 depth--;
-            } else if (elem && Array.isArray(elem) && elem.length) {
-                pointer.push(elem);
+                if (depth == 0) break;
             } else if (elem === ',') {
+                pointer = [];
+                stack[stack.length-1].push(pointer);
+            } else {
+                pointer.push(parseFloat(elem));
             }
             white();
         }
+        stack.length = 0;
         if (depth !== 0) return null;
         return rings;
     }
@@ -60,7 +88,7 @@ function parse(_) {
     }
 
     function point() {
-        if (!$(/^(POINT)/)) return null;
+        if (!$(/^(point)/i)) return null;
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
@@ -73,18 +101,18 @@ function parse(_) {
     }
 
     function multipoint() {
-        if (!$(/^(MULTIPOINT)/)) return null;
+        if (!$(/^(multipoint)/i)) return null;
         white();
         var c = multicoords();
         white();
         return {
             type: 'MultiPoint',
-            coordinates: c[0]
+            coordinates: c
         };
     }
 
     function multilinestring() {
-        if (!$(/^(MULTILINESTRING)/)) return null;
+        if (!$(/^(multilinestring)/i)) return null;
         white();
         var c = multicoords();
         white();
@@ -95,7 +123,7 @@ function parse(_) {
     }
 
     function linestring() {
-        if (!$(/^(LINESTRING)/)) return null;
+        if (!$(/^(linestring)/i)) return null;
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
@@ -107,7 +135,7 @@ function parse(_) {
     }
 
     function polygon() {
-        if (!$(/^(POLYGON)/)) return null;
+        if (!$(/^(polygon)/i)) return null;
         white();
         return {
             type: 'Polygon',
@@ -116,7 +144,7 @@ function parse(_) {
     }
 
     function multipolygon() {
-        if (!$(/^(MULTIPOLYGON)/)) return null;
+        if (!$(/^(multipolygon)/i)) return null;
         white();
         return {
             type: 'MultiPolygon',
@@ -127,13 +155,15 @@ function parse(_) {
     function geometrycollection() {
         var geometries = [], geometry;
 
-        if (!$(/^(GEOMETRYCOLLECTION)/)) return null;
+        if (!$(/^(geometrycollection)/i)) return null;
         white();
 
         if (!$(/^(\()/)) return null;
         while (geometry = root()) {
             geometries.push(geometry);
+            white();
             $(/^(\,)/);
+            white();
         }
         if (!$(/^(\))/)) return null;
 
@@ -144,13 +174,18 @@ function parse(_) {
     }
 
     function root() {
-        return point() || linestring() || polygon() ||
-            multipoint() || multilinestring() || multipolygon() || geometrycollection();
+        return point() ||
+            linestring() ||
+            polygon() ||
+            multipoint() ||
+            multilinestring() ||
+            multipolygon() ||
+            geometrycollection();
     }
 
-    return root();
+    return crs(root());
 }
 
-},{}]},{},[1])(1)
+},{}]},{},[1])
+(1)
 });
-;
