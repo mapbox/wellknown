@@ -41,6 +41,7 @@ function parse(_) {
         white();
         var depth = 0, rings = [], stack = [rings],
             pointer = rings, elem;
+
         while (elem =
             $(/^(\()/) ||
             $(/^(\))/) ||
@@ -49,21 +50,25 @@ function parse(_) {
             if (elem == '(') {
                 stack.push(pointer);
                 pointer = [];
-                stack[stack.length-1].push(pointer);
+                stack[stack.length - 1].push(pointer);
                 depth++;
             } else if (elem == ')') {
                 pointer = stack.pop();
+                // the stack was empty, input was malformed
+                if (!pointer) return;
                 depth--;
-                if (depth == 0) break;
+                if (depth === 0) break;
             } else if (elem === ',') {
                 pointer = [];
-                stack[stack.length-1].push(pointer);
-            } else {
+                stack[stack.length - 1].push(pointer);
+            } else if (!isNaN(parseFloat(elem))) {
                 pointer.push(parseFloat(elem));
+            } else {
+                return null;
             }
             white();
         }
-        stack.length = 0;
+
         if (depth !== 0) return null;
         return rings;
     }
@@ -91,6 +96,7 @@ function parse(_) {
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
+        if (!c) return null;
         white();
         if (!$(/^(\))/)) return null;
         return {
@@ -103,6 +109,7 @@ function parse(_) {
         if (!$(/^(multipoint)/i)) return null;
         white();
         var c = multicoords();
+        if (!c) return null;
         white();
         return {
             type: 'MultiPoint',
@@ -114,6 +121,7 @@ function parse(_) {
         if (!$(/^(multilinestring)/i)) return null;
         white();
         var c = multicoords();
+        if (!c) return null;
         white();
         return {
             type: 'MultiLineString',
@@ -126,6 +134,7 @@ function parse(_) {
         white();
         if (!$(/^(\()/)) return null;
         var c = coords();
+        if (!c) return null;
         if (!$(/^(\))/)) return null;
         return {
             type: 'LineString',
