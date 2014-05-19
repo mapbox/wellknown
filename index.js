@@ -26,7 +26,7 @@ function parse(_) {
         if (obj && srid.match(/\d+/)) {
             obj.crs = {
                 type: 'name',
-                'properties': {
+                properties: {
                     name: 'urn:ogc:def:crs:EPSG::' + srid
                 }
             };

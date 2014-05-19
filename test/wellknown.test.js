@@ -142,6 +142,9 @@ test('wellknown', function(t) {
             [[[30, 20], [10, 40], [45, 40], [30, 20]]],
             [[[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]]
     });
+    t.deepEqual(parse('MULTIPOLYGON (((-74.03349399999999 40.688348)))'),
+        {"type":"MultiPolygon","coordinates":[[[[-74.03349399999999,40.688348]]]]}
+    );
     t.deepEqual(parse('MULTIPOLYGON (((30 20, 10 40, 45 40, 30 20)), ((15 5, 40 10, 10 20, 5 10, 15 5), (10 10, 15 10, 15 15, 10 10)))'), {
         type: 'MultiPolygon',
         coordinates: [
