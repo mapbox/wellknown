@@ -42,8 +42,7 @@
     "fuzzer": "~0.1.0"
   },
   "dependencies": {
-    "concat-stream": "~1.0.1",
-    "minimist": "0.0.2",
-    "sharkdown": "0.0.1"
+    "concat-stream": "~1.4.5",
+    "minimist": "0.0.2"
   }
 }
