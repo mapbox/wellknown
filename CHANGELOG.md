@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0
+
+* Introduces `.stringify(geojson)`
+
 ## 0.1.1
 
 * Fix issue with multicoords being overeager - fixes GeometryCollection cases

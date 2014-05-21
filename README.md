@@ -2,7 +2,7 @@
 
 # wellknown
 
-Parse [Well-Known Text](http://en.wikipedia.org/wiki/Well-known_text) into [GeoJSON](http://www.geojson.org/).
+Parse & stringify [Well-Known Text](http://en.wikipedia.org/wiki/Well-known_text) into [GeoJSON](http://www.geojson.org/).
 
 Support
 
@@ -41,6 +41,11 @@ this is a node-style module that works in node.js via npm and in browsers via
 
 Given WKT as a string, return a GeoJSON [geometry object](http://geojson.org/geojson-spec.html#geometry-objects)
 or `null` if parse fails.
+
+### `stringify(geojson)`
+
+Given a GeoJSON geometry object or Feature object, return a WKT representation
+as a string. Throws an error if given a `FeatureCollection` or unknown input.
 
 ## example
 
