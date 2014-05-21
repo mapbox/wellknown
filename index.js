@@ -1,4 +1,5 @@
 module.exports = parse;
+module.exports.stringify = stringify;
 
  /*
  * Parse WKT and return GeoJSON.
@@ -192,4 +193,22 @@ function parse(_) {
     }
 
     return crs(root());
+}
+
+/**
+ * Stringifies a GeoJSON object into WKT
+ */
+function stringify(gj) {
+    if (gj.type === 'Feature') {
+        gj = gj.geometry;
+    }
+
+    switch (gj.type) {
+        case 'Point':
+            return 'POINT (' + gj.coordinates.join(' ') + ')';
+        case 'LineString':
+            return 'LINESTRING (' + gj.coordinates.join(' ') + ')';
+        default:
+            throw new Error('stringify requires a valid GeoJSON Feature or geometry object as input');
+    }
 }
