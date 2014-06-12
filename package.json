@@ -4,7 +4,7 @@
   "description": "convert wkt to geojson",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "zuul -- test/*.js",
     "test-browser": "browserify -t brfs test/wellknown.test.js | testling"
   },
   "bin": {
