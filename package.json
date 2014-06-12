@@ -43,7 +43,9 @@
     "tape": "~2.4.2",
     "brfs": "~0.2.1",
     "testling": "~1.6.0",
-    "fuzzer": "~0.1.0"
+    "fuzzer": "~0.1.0",
+    "mocha": "~1.20.1",
+    "zuul": "~1.6.5"
   },
   "dependencies": {
     "concat-stream": "~1.4.5",
