@@ -1,4 +1,4 @@
-[![](https://ci.testling.com/mapbox/wellknown.png)](https://ci.testling.com/mapbox/wellknown)
+[![Build Status](https://travis-ci.org/mapbox/wellknown.svg?branch=master)](https://travis-ci.org/mapbox/wellknown)
 
 # wellknown
 
