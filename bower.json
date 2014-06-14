@@ -1,0 +1,12 @@
+{
+  "name": "wellknown",
+  "description": "convert wkt to geojson",
+  "version": "0.2.0",
+  "license": "BSD",
+  "keywords": [
+    "wkt",
+    "geojson",
+    "maps"
+  ],
+  "main": "index.js"
+}
