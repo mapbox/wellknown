@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "zuul -- test/*.js",
+    "cov": "istanbul cover node_modules/.bin/tape --report lcovonly test/*.js && coveralls < ./coverage/lcov.info",
     "test-browser": "browserify -t brfs test/wellknown.test.js | testling"
   },
   "bin": {
@@ -20,19 +21,6 @@
       "brfs"
     ]
   },
-  "testling": {
-    "files": "test/*.js",
-    "browsers": [
-      "ie/8..latest",
-      "chrome/22..latest",
-      "firefox/16..latest",
-      "safari/latest",
-      "opera/11.0..latest",
-      "iphone/6..latest",
-      "ipad/6..latest",
-      "android-browser/latest"
-    ]
-  },
   "author": "Tom MacWright",
   "repository": {
     "type": "git",
@@ -42,10 +30,11 @@
   "devDependencies": {
     "tape": "~2.4.2",
     "brfs": "~0.2.1",
-    "testling": "~1.6.0",
     "fuzzer": "~0.1.0",
     "mocha": "~1.20.1",
-    "zuul": "~1.6.5"
+    "zuul": "~1.6.5",
+    "istanbul": "~0.2.11",
+    "coveralls": "~2.10.0"
   },
   "dependencies": {
     "concat-stream": "~1.4.5",
