@@ -66,6 +66,7 @@ var geojsonLayer = L.geoJson(parse('Point(1 2)'));
 
 * [wicket](https://github.com/arthur-e/Wicket)
 * [openlayers wkt](https://github.com/openlayers/openlayers/blob/master/lib/OpenLayers/Format/WKT.js)
+* [geomet](https://github.com/geomet/geomet) converts between GeoJSON and WKT in Python
 
 ## Rant
 
