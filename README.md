@@ -37,10 +37,10 @@ this is a node-style module that works in node.js via npm and in browsers via
 
 ## api
 
-### `parse(wkt)`
+### `parse(wkt, precision)`
 
 Given WKT as a string, return a GeoJSON [geometry object](http://geojson.org/geojson-spec.html#geometry-objects)
-or `null` if parse fails.
+or `null` if parse fails. Optionally specify a precision to round coordinates.
 
 ### `stringify(geojson)`
 
