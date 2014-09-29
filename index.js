@@ -8,7 +8,7 @@ module.exports.stringify = stringify;
  * @param {string} _ A WKT geometry
  * @return {?Object} A GeoJSON geometry object
  */
-function parse(_) {
+function parse(_, precision) {
     var parts = _.split(";"),
         _ = parts.pop(),
         srid = (parts.shift() || "").split("=").pop();
@@ -64,7 +64,7 @@ function parse(_) {
                 pointer = [];
                 stack[stack.length - 1].push(pointer);
             } else if (!isNaN(parseFloat(elem))) {
-                pointer.push(parseFloat(elem));
+                pointer.push((precision) ? parseFloat(elem).toFixed(precision) : parseFloat(elem));
             } else {
                 return null;
             }
@@ -85,7 +85,7 @@ function parse(_) {
                 item = [];
             } else {
                 if (!item) item = [];
-                item.push(parseFloat(pt));
+                item.push((precision) ? parseFloat(pt).toFixed(precision) : parseFloat(pt));
             }
             white();
         }
