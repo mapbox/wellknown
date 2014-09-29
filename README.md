@@ -42,10 +42,11 @@ this is a node-style module that works in node.js via npm and in browsers via
 Given WKT as a string, return a GeoJSON [geometry object](http://geojson.org/geojson-spec.html#geometry-objects)
 or `null` if parse fails. Optionally specify a precision to round coordinates.
 
-### `stringify(geojson)`
+### `stringify(geojson, precision)`
 
 Given a GeoJSON geometry object or Feature object, return a WKT representation
 as a string. Throws an error if given a `FeatureCollection` or unknown input.
+Optionally specify a precision to round coordinates.
 
 ## example
 

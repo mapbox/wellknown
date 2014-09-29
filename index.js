@@ -199,12 +199,17 @@ function parse(_, precision) {
 /**
  * Stringifies a GeoJSON object into WKT
  */
-function stringify(gj) {
+function stringify(gj, precision) {
     if (gj.type === 'Feature') {
         gj = gj.geometry;
     }
 
     function pairWKT(c) {
+        if (precision) {
+            c = c.map(function(d) {
+                return d.toFixed(precision);
+            });
+        }
         if (c.length === 2) {
             return c[0] + ' ' + c[1];
         } else if (c.length === 3) {
