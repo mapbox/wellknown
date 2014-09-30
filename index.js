@@ -8,7 +8,7 @@ module.exports.stringify = stringify;
  * @param {string} _ A WKT geometry
  * @return {?Object} A GeoJSON geometry object
  */
-function parse(_) {
+function parse(_, precision) {
     var parts = _.split(";"),
         _ = parts.pop(),
         srid = (parts.shift() || "").split("=").pop();
@@ -64,7 +64,7 @@ function parse(_) {
                 pointer = [];
                 stack[stack.length - 1].push(pointer);
             } else if (!isNaN(parseFloat(elem))) {
-                pointer.push(parseFloat(elem));
+                pointer.push((precision) ? parseFloat(elem).toFixed(precision) : parseFloat(elem));
             } else {
                 return null;
             }
@@ -85,7 +85,7 @@ function parse(_) {
                 item = [];
             } else {
                 if (!item) item = [];
-                item.push(parseFloat(pt));
+                item.push((precision) ? parseFloat(pt).toFixed(precision) : parseFloat(pt));
             }
             white();
         }
@@ -199,12 +199,17 @@ function parse(_) {
 /**
  * Stringifies a GeoJSON object into WKT
  */
-function stringify(gj) {
+function stringify(gj, precision) {
     if (gj.type === 'Feature') {
         gj = gj.geometry;
     }
 
     function pairWKT(c) {
+        if (precision) {
+            c = c.map(function(d) {
+                return d.toFixed(precision);
+            });
+        }
         if (c.length === 2) {
             return c[0] + ' ' + c[1];
         } else if (c.length === 3) {
@@ -240,7 +245,7 @@ function stringify(gj) {
         case 'MultiLineString':
             return 'MULTILINESTRING (' + ringsWKT(gj.coordinates) + ')';
         case 'GeometryCollection':
-            return 'GEOMETRYCOLLECTION (' + gj.geometries.map(stringify).join(', ') + ')';
+            return 'GEOMETRYCOLLECTION (' + gj.geometries.map(function(r) { return stringify(r) }).join(', ') + ')';
         default:
             throw new Error('stringify requires a valid GeoJSON Feature or geometry object as input');
     }
