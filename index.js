@@ -245,7 +245,7 @@ function stringify(gj, precision) {
         case 'MultiLineString':
             return 'MULTILINESTRING (' + ringsWKT(gj.coordinates) + ')';
         case 'GeometryCollection':
-            return 'GEOMETRYCOLLECTION (' + gj.geometries.map(stringify).join(', ') + ')';
+            return 'GEOMETRYCOLLECTION (' + gj.geometries.map(function(r) { return stringify(r) }).join(', ') + ')';
         default:
             throw new Error('stringify requires a valid GeoJSON Feature or geometry object as input');
     }
