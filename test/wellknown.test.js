@@ -193,6 +193,10 @@ test('wellknown', function(t) {
         }
         ]
     });
+    t.deepEqual(parse('POINT (1e-6 1E+2)'), {
+        type: 'Point',
+        coordinates: [1e-6, 1E+2]
+    });
 
     t.end();
 });
