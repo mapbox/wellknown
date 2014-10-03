@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+* Now parses WKT with exponent values for coordinates.
+
 ## 0.2.0
 
 * Introduces `.stringify(geojson)`
