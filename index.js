@@ -2,6 +2,8 @@ module.exports = parse;
 module.exports.parse = parse;
 module.exports.stringify = stringify;
 
+var numberRegexp = /^[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
+
  /*
  * Parse WKT and return GeoJSON.
  *
@@ -48,7 +50,7 @@ function parse(_) {
             $(/^(\()/) ||
             $(/^(\))/) ||
             $(/^(\,)/) ||
-            $(/^[-+]?([0-9]*\.[0-9]+|[0-9]+)/)) {
+            $(numberRegexp)) {
             if (elem == '(') {
                 stack.push(pointer);
                 pointer = [];
@@ -78,7 +80,7 @@ function parse(_) {
     function coords() {
         var list = [], item, pt;
         while (pt =
-            $(/^[-+]?([0-9]*\.[0-9]+|[0-9]+)/) ||
+            $(numberRegexp) ||
             $(/^(\,)/)) {
             if (pt == ',') {
                 list.push(item);
