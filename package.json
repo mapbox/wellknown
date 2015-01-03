@@ -4,9 +4,8 @@
   "description": "convert wkt to geojson",
   "main": "index.js",
   "scripts": {
-    "test": "zuul -- test/*.js",
-    "cov": "istanbul cover node_modules/.bin/tape --report lcovonly test/*.js && coveralls < ./coverage/lcov.info",
-    "test-browser": "browserify -t brfs test/wellknown.test.js | testling"
+    "test": "tape test/*.js",
+    "cov": "istanbul cover node_modules/.bin/tape --report lcovonly test/*.js && coveralls < ./coverage/lcov.info"
   },
   "bin": {
     "wellknown": "cli.js"
@@ -16,11 +15,6 @@
     "geojson",
     "maps"
   ],
-  "browserify": {
-    "transform": [
-      "brfs"
-    ]
-  },
   "author": "Tom MacWright",
   "repository": {
     "type": "git",
@@ -29,10 +23,7 @@
   "license": "BSD",
   "devDependencies": {
     "tape": "~2.4.2",
-    "brfs": "~0.2.1",
     "fuzzer": "~0.1.0",
-    "mocha": "~1.20.1",
-    "zuul": "~1.6.5",
     "istanbul": "~0.2.11",
     "coveralls": "~2.10.0"
   },

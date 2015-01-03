@@ -1,4 +1,6 @@
 ui: tape
+transform:
+  - transform: brfs
 browsers:
   - name: chrome
     version: latest
