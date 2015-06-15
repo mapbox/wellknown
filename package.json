@@ -22,10 +22,11 @@
   },
   "license": "BSD",
   "devDependencies": {
-    "tape": "~2.4.2",
+    "benchmark": "^1.0.0",
+    "coveralls": "~2.10.0",
     "fuzzer": "~0.1.0",
     "istanbul": "~0.2.11",
-    "coveralls": "~2.10.0"
+    "tape": "~2.4.2"
   },
   "dependencies": {
     "concat-stream": "~1.4.5",
