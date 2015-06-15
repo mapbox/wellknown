@@ -21,7 +21,7 @@ function parse(_) {
         var match = temp.match(re);
         if (!match) return null;
         else {
-            temp = temp.slice(match[0].length);
+            temp = temp.substring(match[0].length);
             return match[0];
         }
     }
