@@ -12,17 +12,16 @@ var numberRegexp = /^[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
  * @return {?Object} A GeoJSON geometry object
  */
 function parse(_) {
+
     var parts = _.split(";"),
-        _ = parts.pop(),
+        temp = parts.pop(),
         srid = (parts.shift() || "").split("=").pop();
 
-    var i = 0;
-
     function $(re) {
-        var match = _.substring(i).match(re);
+        var match = temp.match(re);
         if (!match) return null;
         else {
-            i += match[0].length;
+            temp = temp.substring(match[0].length);
             return match[0];
         }
     }
