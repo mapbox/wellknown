@@ -197,6 +197,12 @@ test('wellknown', function(t) {
         type: 'Point',
         coordinates: [1e-6, 1E+2]
     });
+    t.equal(parse('POINT(100)'), null);
+    t.equal(parse('POINT(100, 100)'), null);
+    t.equal(parse('POINT()'), null);
+    t.equal(parse('MULTIPOINT()'), null);
+    t.equal(parse('MULTIPOINT(1)'), null);
+    t.equal(parse('MULTIPOINT(1 1, 1)'), null);
 
     t.end();
 });

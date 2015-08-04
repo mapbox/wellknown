@@ -2,7 +2,9 @@ module.exports = parse;
 module.exports.parse = parse;
 module.exports.stringify = stringify;
 
-var numberRegexp = /^[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
+var numberRegexp = /[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
+// Matches sequences like "100 100" or "100 100 100".
+var tuples = new RegExp('^' + numberRegexp.source + '\\s' + numberRegexp.source + '(\\s' + numberRegexp.source + ')?');
 
  /*
  * Parse WKT and return GeoJSON.
@@ -50,23 +52,26 @@ function parse(_) {
             $(/^(\()/) ||
             $(/^(\))/) ||
             $(/^(\,)/) ||
-            $(numberRegexp)) {
+            $(tuples)) {
             if (elem == '(') {
                 stack.push(pointer);
                 pointer = [];
                 stack[stack.length - 1].push(pointer);
                 depth++;
             } else if (elem == ')') {
+                // For the case: Polygon(), ...
+                if (pointer.length === 0) return null;
+
                 pointer = stack.pop();
                 // the stack was empty, input was malformed
-                if (!pointer) return;
+                if (!pointer) return null;
                 depth--;
                 if (depth === 0) break;
             } else if (elem === ',') {
                 pointer = [];
                 stack[stack.length - 1].push(pointer);
-            } else if (!isNaN(parseFloat(elem))) {
-                pointer.push(parseFloat(elem));
+            } else if (elem.split(/\s/g).every(parseFloat)) {
+                Array.prototype.push.apply(pointer, elem.split(/\s/g).map(parseFloat));
             } else {
                 return null;
             }
@@ -74,24 +79,28 @@ function parse(_) {
         }
 
         if (depth !== 0) return null;
+
         return rings;
     }
 
     function coords() {
         var list = [], item, pt;
         while (pt =
-            $(numberRegexp) ||
+            $(tuples) ||
             $(/^(\,)/)) {
             if (pt == ',') {
                 list.push(item);
                 item = [];
-            } else {
+            } else if (pt.split(/\s/g).every(parseFloat)) {
                 if (!item) item = [];
-                item.push(parseFloat(pt));
+                Array.prototype.push.apply(item, pt.split(/\s/g).map(parseFloat));
             }
             white();
         }
+
         if (item) list.push(item);
+        else return null;
+
         return list.length ? list : null;
     }
 
@@ -149,18 +158,22 @@ function parse(_) {
     function polygon() {
         if (!$(/^(polygon)/i)) return null;
         white();
+        var c = multicoords();
+        if (!c) return null;
         return {
             type: 'Polygon',
-            coordinates: multicoords()
+            coordinates: c
         };
     }
 
     function multipolygon() {
         if (!$(/^(multipolygon)/i)) return null;
         white();
+        var c = multicoords();
+        if (!c) return null;
         return {
             type: 'MultiPolygon',
-            coordinates: multicoords()
+            coordinates: c
         };
     }
 
