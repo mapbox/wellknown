@@ -1,6 +1,6 @@
 var parse = require('../'),
     fuzzer = require('fuzzer'),
-    test = require('tape').test;
+    test = require('tap').test;
 
 test('fuzz', function(t) {
     fuzzer.seed(0);

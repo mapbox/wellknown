@@ -1,7 +1,5 @@
 var wellknown = require('../'),
-    fs = require('fs'),
-    fuzzer = require('fuzzer'),
-    test = require('tape').test;
+    test = require('tap').test;
 
 test('wellknown', function(t) {
     t.throws(function() {
@@ -29,6 +27,15 @@ test('wellknown', function(t) {
     function loop(s) {
         return wellknown.stringify(wellknown(s));
     }
+
+    t.equal(wellknown.stringify({
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: [42, 20]
+        }
+    }), 'POINT (42 20)', 'point equal');
 
     t.end();
 });

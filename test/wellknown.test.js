@@ -1,7 +1,7 @@
 var parse = require('../'),
     fs = require('fs'),
     fuzzer = require('fuzzer'),
-    test = require('tape').test;
+    test = require('tap').test;
 
 test('wellknown', function(t) {
     t.deepEqual(parse('POINT (1 1)'), {
