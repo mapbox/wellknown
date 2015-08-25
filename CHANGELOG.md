@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.1
+
+* Fix for coordinate arrays with incorrect lengths
+* Now uses semistandard for code formatting and tap for tests
+
 ## 0.3.0
 
 * Now parses WKT with exponent values for coordinates.
