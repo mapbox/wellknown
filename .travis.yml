@@ -8,7 +8,3 @@ env:
   global:
   - secure: Xy1Jl53Yovuj9tProdpmMmPThyA+iBxQYhceOqb+1O9FX8+6/9ohrgN+yF7VqvwX5cLPiico7/NCbS/BG/yufuxK8nddc4hPOYR1zZlwz0j1QBGDRsRG8PK3DlOtxyNHJTiDkNGjrDeeuM31uxL2qErl9IpEbE+8qi1bswRpKi8=
   - secure: A39ISE6SAsqOCGJNV2UdqVlGEpg0VefYOw6qVuihksRIy5UoBtlmq1YzaXq0Q9Vd6TsYbMdEkBz5Zcok4+uZZIUpgvr90iMYpFHLWm2Qdr87X1PwSrTrce6nVfVUU9D/G0vZXd/LUyw0Lo8DngMHrUMaLuM9Vu10h9SXdDFMM+Y=
-script:
-  - npm install
-  - npm test
-  - npm run cov
