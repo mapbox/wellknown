@@ -4,6 +4,10 @@ var parse = require('../'),
     test = require('tap').test;
 
 test('wellknown', function(t) {
+    t.deepEqual(parse('POINT (0 1)'), {
+        type: 'Point',
+        coordinates: [0, 1]
+    });
     t.deepEqual(parse('POINT (1 1)'), {
         type: 'Point',
         coordinates: [1, 1]
@@ -99,6 +103,10 @@ test('wellknown', function(t) {
             [ 20, 30 ]
         ]
         ]
+    });
+    t.deepEqual(parse('MULTIPOINT (0 0, 2 3)'), {
+        type: 'MultiPoint',
+        coordinates: [[0, 0], [2, 3]]
     });
     t.deepEqual(parse('MULTIPOINT (1 1, 2 3)'), {
         type: 'MultiPoint',
