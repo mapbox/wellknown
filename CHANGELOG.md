@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0
+
+* Support for 4D geometries
+
 ## 0.3.1
 
 * Fix for coordinate arrays with incorrect lengths
