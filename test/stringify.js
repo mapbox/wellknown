@@ -11,7 +11,9 @@ test('wellknown', function(t) {
     var fixtures = [
         'LINESTRING (30 10, 10 30, 40 40)',
         'POINT (1 1)',
+        'POINT (1 1 1 1)',
         'LINESTRING (1 2 3, 4 5 6)',
+        'LINESTRING (1 2 3 4, 5 6 7 8)',
         'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))',
         'POLYGON ((35 10, 10 20, 15 40, 45 45, 35 10), (20 30, 35 35, 30 20, 20 30))',
         'MULTIPOINT (1 1, 2 3)',
