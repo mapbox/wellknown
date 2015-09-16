@@ -227,11 +227,7 @@ function stringify (gj) {
   }
 
   function pairWKT (c) {
-    if (c.length === 2) {
-      return c[0] + ' ' + c[1];
-    } else if (c.length === 3) {
-      return c[0] + ' ' + c[1] + ' ' + c[2];
-    }
+    return c.join(' ');
   }
 
   function ringWKT (r) {
