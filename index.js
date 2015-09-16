@@ -5,7 +5,7 @@ module.exports.stringify = stringify;
 
 var numberRegexp = /[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
 // Matches sequences like '100 100' or '100 100 100'.
-var tuples = new RegExp('^' + numberRegexp.source + '\\s' + numberRegexp.source + '(\\s' + numberRegexp.source + ')?');
+var tuples = new RegExp('^' + numberRegexp.source + '(\\s' + numberRegexp.source + '){1,}');
 
 /*
  * Parse WKT and return GeoJSON.
