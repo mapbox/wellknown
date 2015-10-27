@@ -128,6 +128,12 @@ function parse (input) {
   function multipoint () {
     if (!$(/^(multipoint)/i)) return null;
     white();
+    var newCoordsFormat = _
+        .substring(_.indexOf('(') + 1, _.length - 1)
+        .replace(/\(/g, '')
+        .replace(/\)/g, '');
+
+    _ = 'MULTIPOINT (' + newCoordsFormat + ')';
     var c = multicoords();
     if (!c) return null;
     white();
