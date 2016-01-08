@@ -134,6 +134,28 @@ test('wellknown', function(t) {
             }
         }
     });
+    t.deepEqual(parse('MULTIPOINT ((0 0), (2 3))'), {
+        type: 'MultiPoint',
+        coordinates: [[0, 0], [2, 3]]
+    });
+    t.deepEqual(parse('MULTIPOINT ((1 1), (2 3))'), {
+        type: 'MultiPoint',
+        coordinates: [[1, 1], [2, 3]]
+    });
+    t.deepEqual(parse('MultiPoint ((1 1), (2 3))'), {
+        type: 'MultiPoint',
+        coordinates: [[1, 1], [2, 3]]
+    });
+    t.deepEqual(parse('SRID=3857;MULTIPOINT ((1 1), (2 3))'), {
+        type: 'MultiPoint',
+        coordinates: [[1, 1], [2, 3]],
+        crs: {
+            type: 'name',
+            'properties': {
+                name: 'urn:ogc:def:crs:EPSG::3857'
+            }
+        }
+    });
     t.deepEqual(parse('MULTILINESTRING ((30 10, 10 30, 40 40), (30 10, 10 30, 40 40))'), {
         type: 'MultiLineString',
         coordinates: [
