@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1
+
+* Support for [alternative MultiPoint syntax](https://github.com/mapbox/wellknown/pull/29)
+
 ## 0.4.0
 
 * Support for 4D geometries
