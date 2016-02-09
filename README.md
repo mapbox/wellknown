@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mapbox/wellknown.svg?branch=master)](https://travis-ci.org/mapbox/wellknown) [![Coverage Status](https://coveralls.io/repos/mapbox/wellknown/badge.png)](https://coveralls.io/r/mapbox/wellknown)
+[![Build Status](https://travis-ci.org/mapbox/wellknown.svg?branch=master)](https://travis-ci.org/mapbox/wellknown) [![Coverage Status](https://coveralls.io/repos/mapbox/wellknown/badge.svg)](https://coveralls.io/r/mapbox/wellknown)
 
 # wellknown
 
