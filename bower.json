@@ -8,5 +8,5 @@
     "geojson",
     "maps"
   ],
-  "main": "index.js"
+  "main": "wellknown.js"
 }
