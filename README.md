@@ -31,6 +31,10 @@ this is a node-style module that works in node.js via npm and in browsers via
 
     npm install wellknown
 
+**bower install**:
+
+    bower install wellknown --save
+
 **standalone**:
 
     wget https://raw.github.com/mapbox/wellknown/master/wellknown.js
