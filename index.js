@@ -111,7 +111,7 @@ function parse (input) {
   }
 
   function point () {
-    if (!$(/^(point)/i)) return null;
+    if (!$(/^(point\s?z?)/i)) return null;
     white();
     if (!$(/^(\()/)) return null;
     var c = coords();
@@ -154,7 +154,7 @@ function parse (input) {
   }
 
   function linestring () {
-    if (!$(/^(linestring)/i)) return null;
+    if (!$(/^(linestring\s?z?)/i)) return null;
     white();
     if (!$(/^(\()/)) return null;
     var c = coords();
@@ -167,7 +167,7 @@ function parse (input) {
   }
 
   function polygon () {
-    if (!$(/^(polygon)/i)) return null;
+    if (!$(/^(polygon\s?z?)/i)) return null;
     white();
     var c = multicoords();
     if (!c) return null;

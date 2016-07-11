@@ -242,5 +242,21 @@ test('wellknown', function(t) {
     t.equal(parse('MULTIPOINT(1)'), null);
     t.equal(parse('MULTIPOINT(1 1, 1)'), null);
 
+
+    t.deepEqual(parse('POINT Z (1 2 3)'), {
+        type: 'Point',
+        coordinates: [1, 2, 3]
+    });
+
+    t.deepEqual(parse('LINESTRING Z (30 10 1, 10 30 2, 40 40 3)'), {
+        type: 'LineString',
+        coordinates: [[30, 10, 1], [10, 30, 2], [40, 40, 3]]
+    });
+
+    t.deepEqual(parse('POLYGON Z ((30 10 1, 10 20 2, 20 40 3, 40 40 4, 30 10 5))'), {
+        type: 'Polygon',
+        coordinates: [[[30, 10, 1], [10, 20, 2], [20, 40, 3], [40, 40, 4], [30, 10, 5]]]
+    });
+
     t.end();
 });
