@@ -4,7 +4,8 @@
   "description": "convert wkt to geojson",
   "main": "index.js",
   "scripts": {
-    "test": "semistandard index.js && tap --coverage test/*.js"
+    "test": "semistandard index.js && tap --coverage test/*.js",
+    "prepublish": "browserify -s wellknown index.js > wellknown.js"
   },
   "bin": {
     "wellknown": "cli.js"
