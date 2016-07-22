@@ -6,7 +6,7 @@ module.exports.stringify = stringify;
 
 var numberRegexp = /[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
 // Matches sequences like '100 100' or '100 100 100'.
-var tuples = new RegExp('^' + numberRegexp.source + '\\s' + numberRegexp.source + '(\\s' + numberRegexp.source + ')?');
+var tuples = new RegExp('^' + numberRegexp.source + '(\\s' + numberRegexp.source + '){1,}');
 
 /*
  * Parse WKT and return GeoJSON.
@@ -56,7 +56,7 @@ function parse (input) {
     while (elem =
            $(/^(\()/) ||
              $(/^(\))/) ||
-               $(/^(\,)/) ||
+               $(/^(,)/) ||
                  $(tuples)) {
       if (elem === '(') {
         stack.push(pointer);
@@ -94,7 +94,7 @@ function parse (input) {
     var pt;
     while (pt =
            $(tuples) ||
-             $(/^(\,)/)) {
+             $(/^(,)/)) {
       if (pt === ',') {
         list.push(item);
         item = [];
@@ -112,7 +112,7 @@ function parse (input) {
   }
 
   function point () {
-    if (!$(/^(point)/i)) return null;
+    if (!$(/^(point(\sz)?)/i)) return null;
     white();
     if (!$(/^(\()/)) return null;
     var c = coords();
@@ -129,10 +129,9 @@ function parse (input) {
     if (!$(/^(multipoint)/i)) return null;
     white();
     var newCoordsFormat = _
-        .substring(_.indexOf('(') + 1, _.length - 1)
-        .replace(/\(/g, '')
-        .replace(/\)/g, '');
-
+      .substring(_.indexOf('(') + 1, _.length - 1)
+      .replace(/\(/g, '')
+      .replace(/\)/g, '');
     _ = 'MULTIPOINT (' + newCoordsFormat + ')';
     var c = multicoords();
     if (!c) return null;
@@ -156,7 +155,7 @@ function parse (input) {
   }
 
   function linestring () {
-    if (!$(/^(linestring)/i)) return null;
+    if (!$(/^(linestring(\sz)?)/i)) return null;
     white();
     if (!$(/^(\()/)) return null;
     var c = coords();
@@ -169,7 +168,7 @@ function parse (input) {
   }
 
   function polygon () {
-    if (!$(/^(polygon)/i)) return null;
+    if (!$(/^(polygon(\sz)?)/i)) return null;
     white();
     var c = multicoords();
     if (!c) return null;
@@ -201,7 +200,7 @@ function parse (input) {
     while (geometry = root()) {
       geometries.push(geometry);
       white();
-      $(/^(\,)/);
+      $(/^(,)/);
       white();
     }
     if (!$(/^(\))/)) return null;
@@ -234,11 +233,7 @@ function stringify (gj) {
   }
 
   function pairWKT (c) {
-    if (c.length === 2) {
-      return c[0] + ' ' + c[1];
-    } else if (c.length === 3) {
-      return c[0] + ' ' + c[1] + ' ' + c[2];
-    }
+    return c.join(' ');
   }
 
   function ringWKT (r) {
