@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0
+
+* Add support for `Z` coordinates.
+
 ## 0.4.1
 
 * Support for [alternative MultiPoint syntax](https://github.com/mapbox/wellknown/pull/29)
