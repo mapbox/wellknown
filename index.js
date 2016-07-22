@@ -55,7 +55,7 @@ function parse (input) {
     while (elem =
            $(/^(\()/) ||
              $(/^(\))/) ||
-               $(/^(\,)/) ||
+               $(/^(,)/) ||
                  $(tuples)) {
       if (elem === '(') {
         stack.push(pointer);
@@ -93,7 +93,7 @@ function parse (input) {
     var pt;
     while (pt =
            $(tuples) ||
-             $(/^(\,)/)) {
+             $(/^(,)/)) {
       if (pt === ',') {
         list.push(item);
         item = [];
@@ -199,7 +199,7 @@ function parse (input) {
     while (geometry = root()) {
       geometries.push(geometry);
       white();
-      $(/^(\,)/);
+      $(/^(,)/);
       white();
     }
     if (!$(/^(\))/)) return null;
