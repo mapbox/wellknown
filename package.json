@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/mapbox/wellknown.git"
   },
-  "license": "BSD",
+  "license": "ISC",
   "devDependencies": {
     "fuzzer": "~0.2.0",
     "semistandard": "^8.0.0",
