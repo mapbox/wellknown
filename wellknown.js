@@ -252,7 +252,11 @@ function stringify (gj) {
 
   switch (gj.type) {
     case 'Point':
-      return 'POINT (' + pairWKT(gj.coordinates) + ')';
+      if (gj.coordinates.length == 3)
+        return 'POINT Z (' + pairWKT(gj.coordinates) + ')';
+      else if (gj.coordinates.length == 2)
+        return 'POINT (' + pairWKT(gj.coordinates) + ')';
+      throw new Error("Invalid coordinates for point provided");
     case 'LineString':
       return 'LINESTRING (' + ringWKT(gj.coordinates) + ')';
     case 'Polygon':
