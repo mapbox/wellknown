@@ -22,6 +22,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^9.0.0",
     "fuzzer": "~0.2.0",
     "semistandard": "^8.0.0",
     "tap": "^6.2.0"

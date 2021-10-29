@@ -89,6 +89,7 @@ function parse (input) {
   }
 
   function coords () {
+    white();
     var list = [];
     var item;
     var pt;

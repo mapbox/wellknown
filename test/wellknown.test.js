@@ -20,6 +20,14 @@ test('wellknown', function(t) {
         type: 'Point',
         coordinates: [1, 1]
     });
+    t.deepEqual(parse('POINT( 1 1)'), {
+        type: 'Point',
+        coordinates: [1, 1]
+    });
+    t.deepEqual(parse('POINT ( 1 1)'), {
+        type: 'Point',
+        coordinates: [1, 1]
+    });
     t.deepEqual(parse('POINT(1.1 1.1)'), {
         type: 'Point',
         coordinates: [1.1, 1.1]
@@ -51,6 +59,14 @@ test('wellknown', function(t) {
         coordinates: [[30, 10], [10, 30], [40, 40]]
     });
     t.deepEqual(parse('LINESTRING(30 10, 10 30, 40 40)'), {
+        type: 'LineString',
+        coordinates: [[30, 10], [10, 30], [40, 40]]
+    });
+    t.deepEqual(parse('LINESTRING( 30 10, 10 30, 40 40)'), {
+        type: 'LineString',
+        coordinates: [[30, 10], [10, 30], [40, 40]]
+    });
+    t.deepEqual(parse('LINESTRING ( 30 10, 10 30, 40 40)'), {
         type: 'LineString',
         coordinates: [[30, 10], [10, 30], [40, 40]]
     });
