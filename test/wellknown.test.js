@@ -258,5 +258,21 @@ test('wellknown', function(t) {
         coordinates: [[[30, 10, 1], [10, 20, 2], [20, 40, 3], [40, 40, 4], [30, 10, 5]]]
     });
 
+    // OGC SF WKT: the ordinate separator is one or more whitespace, so
+    // multiple spaces between ordinates denote the same geometry.
+    t.deepEqual(parse('POINT (1  2)'), parse('POINT (1 2)'));
+    t.deepEqual(parse('POINT (1  2)'), {
+        type: 'Point',
+        coordinates: [1, 2]
+    });
+    t.deepEqual(parse('LINESTRING (1  2, 3  4)'), {
+        type: 'LineString',
+        coordinates: [[1, 2], [3, 4]]
+    });
+    t.deepEqual(parse('POLYGON ((0 0, 1  0, 1 1, 0 0))'), {
+        type: 'Polygon',
+        coordinates: [[[0, 0], [1, 0], [1, 1], [0, 0]]]
+    });
+
     t.end();
 });
