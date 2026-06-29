@@ -5,7 +5,7 @@ module.exports.stringify = stringify;
 
 var numberRegexp = /[-+]?([0-9]*\.[0-9]+|[0-9]+)([eE][-+]?[0-9]+)?/;
 // Matches sequences like '100 100' or '100 100 100'.
-var tuples = new RegExp('^' + numberRegexp.source + '(\\s' + numberRegexp.source + '){1,}');
+var tuples = new RegExp('^' + numberRegexp.source + '(\\s+' + numberRegexp.source + '){1,}');
 
 /*
  * Parse WKT and return GeoJSON.
@@ -74,8 +74,8 @@ function parse (input) {
       } else if (elem === ',') {
         pointer = [];
         stack[stack.length - 1].push(pointer);
-      } else if (!elem.split(/\s/g).some(isNaN)) {
-        Array.prototype.push.apply(pointer, elem.split(/\s/g).map(parseFloat));
+      } else if (!elem.split(/\s+/g).some(isNaN)) {
+        Array.prototype.push.apply(pointer, elem.split(/\s+/g).map(parseFloat));
       } else {
         return null;
       }
@@ -97,9 +97,9 @@ function parse (input) {
       if (pt === ',') {
         list.push(item);
         item = [];
-      } else if (!pt.split(/\s/g).some(isNaN)) {
+      } else if (!pt.split(/\s+/g).some(isNaN)) {
         if (!item) item = [];
-        Array.prototype.push.apply(item, pt.split(/\s/g).map(parseFloat));
+        Array.prototype.push.apply(item, pt.split(/\s+/g).map(parseFloat));
       }
       white();
     }
